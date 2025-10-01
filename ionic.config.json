@@ -1,0 +1,7 @@
+{
+  "name": "visual-optica-plus",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
