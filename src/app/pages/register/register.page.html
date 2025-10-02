@@ -1,0 +1,90 @@
+<ion-content>
+  <body class="screen">
+     <section class="container container-form">
+       <!-- Logo -->
+       <figure>
+          <img src="assets/images/logo.png" alt="Logo" class="app-icon">
+       </figure>
+       <h1>BIENVENIDO</h1>
+       <!-- Formulario de inicio de sesión -->
+       <form [formGroup]="form" autocomplete="off">
+          <label class="container-input">
+              <p class="labels">Nombre</p>
+              <input type="text" formControlName="name" [ngClass]="{'error': form.get('name')?.invalid && form.get('name')?.dirty}">
+              @if (form.get('name')?.invalid && form.get('name')?.dirty) {
+                <div class="error-message">El nombre es obligatorio.</div>
+              }
+            </label>
+          <label class="container-input">
+              <p class="labels">Apellido</p>
+              <input type="text" formControlName="lastName" [ngClass]="{'error': form.get('lastName')?.invalid && form.get('lastName')?.dirty}">
+              @if (form.get('lastName')?.invalid && form.get('lastName')?.dirty) {
+                <div class="error-message">El apellido es obligatorio.</div>
+              }
+          </label>
+          <label class="container-input">
+              <p class="labels">Correo Electrónico</p>
+              <input type="email" formControlName="email" [ngClass]="{'error': form.get('email')?.invalid && form.get('email')?.dirty}">
+              @if (form.get('email')?.invalid && form.get('email')?.dirty) {
+                <div class="error-message">
+                  @if (form.get('email')?.errors?.['required']) {
+                    El correo electrónico es obligatorio.
+                  } @else if (form.get('email')?.errors?.['email']) {
+                    Formato de correo electrónico inválido.
+                  }
+                </div>
+              }
+          </label>
+          <label class="container-input">
+              <p class="labels">Teléfono</p>
+              <input type="tel" formControlName="phone" [ngClass]="{'error': form.get('phone')?.invalid && form.get('phone')?.dirty}">
+              @if (form.get('phone')?.invalid && form.get('phone')?.dirty) {
+                <div class="error-message">
+                  @if (form.get('phone')?.errors?.['required']) {
+                    El teléfono es obligatorio.
+                  } @else if (form.get('phone')?.errors?.['minlength'] || form.get('phone')?.errors?.['maxlength']) {
+                    El teléfono debe tener 10 dígitos.
+                  }
+                </div>
+              }
+          </label>
+          <label class="container-input">
+              <p class="labels">Usuario</p>
+              <input type="text" formControlName="user" [ngClass]="{'error': form.get('user')?.invalid && form.get('user')?.dirty}">
+              @if (form.get('user')?.invalid && form.get('user')?.dirty) {
+                <div class="error-message">El usuario es obligatorio.</div>
+              }
+          </label>
+          <label class="container-input">
+              <p class="labels">Contraseña</p>
+              <input type="password" formControlName="password" [ngClass]="{'error': form.get('password')?.invalid && form.get('password')?.dirty}">
+              @if (form.get('password')?.invalid && form.get('password')?.dirty) {
+                <div class="error-message">La contraseña es obligatoria.</div>
+              }
+          </label>
+          <label class="container-input">
+              <p class="labels">Confirmar Contraseña</p>
+              <input type="password" formControlName="confirmPassword" [ngClass]="{'error': (form.get('confirmPassword')?.invalid || form.get('password')?.value !== form.get('confirmPassword')?.value) && form.get('confirmPassword')?.dirty}">
+              @if ((form.get('confirmPassword')?.invalid || form.get('password')?.value !== form.get('confirmPassword')?.value) && form.get('confirmPassword')?.dirty) {
+                <div class="error-message">
+                  @if (form.get('confirmPassword')?.errors?.['required']) {
+                    La confirmación de la contraseña es obligatoria.
+                  } @else if (form.get('password')?.value !== form.get('confirmPassword')?.value) {
+                    Las contraseñas no coinciden.
+                  }
+                </div>
+              }
+          </label>
+          <button (click)="onRegister()" [disabled]="form.invalid" class="btn btn-primary">REGISTRARSE</button>
+          <button class="btn btn-primary btn-google">
+            <img src="assets/images/google.png" alt="Google Logo" class="icon">
+            REGISTRARSE CON GOOGLE
+          </button>
+          <p class="link link-register">
+            <span>Tienes cuenta?</span> 
+            <i (click)="navigateToLogin()" class="link"> Inicia Sesión</i>
+          </p>
+       </form>
+     </section>
+  </body>
+</ion-content>

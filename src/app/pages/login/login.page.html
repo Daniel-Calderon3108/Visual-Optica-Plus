@@ -1,0 +1,32 @@
+<ion-content>
+  <body class="screen">
+     <section class="container container-form">
+       <!-- Logo -->
+       <figure>
+          <img src="assets/images/logo.png" alt="Logo" class="app-icon">
+       </figure>
+       <h1>BIENVENIDO</h1>
+       <!-- Formulario de inicio de sesión -->
+       <form [formGroup]="form" autocomplete="off">
+          <label class="container-input">
+              <img src="assets/icon/user.svg" alt="">
+              <input type="text" formControlName="user">
+          </label>
+          <label class="container-input">
+              <img src="assets/icon/key.svg" alt="">
+              <input type="password" formControlName="password">
+              <p class="forgot-password">¿Olvidaste tu contraseña?</p>
+          </label>
+          <button (click)="onLogin()" [disabled]="form.invalid" class="btn btn-primary">INICIAR SESIÓN</button>
+          <button class="btn btn-primary btn-google">
+            <img src="assets/images/google.png" alt="Google Logo" class="icon">
+            CONTINUAR CON GOOGLE
+          </button>
+          <p class="link link-register">
+            <span>No tienes cuenta?</span> 
+            <i (click)="navigateToRegister()" class="link"> Registrate</i>
+          </p>
+       </form>
+     </section>
+  </body>
+</ion-content>
