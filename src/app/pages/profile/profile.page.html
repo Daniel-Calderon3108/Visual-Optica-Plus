@@ -1,13 +1,82 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
+      <ion-title size="large">Profile</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="profile-container">
+    
+    <ion-card class="profile-summary-card">
+      <ion-card-content class="profile-header-content">
+        
+        <div class="profile-header">
+          <div class="avatar-circle">UE</div>
+          <div class="info-text">
+            <h2 class="name-text">Example User</h2>
+            <p class="email-text">exampleuser@email.com</p>
+          </div>
+        </div>
+        
+        <div class="personal-details">
+            <div class="detail-item">
+                <ion-icon name="finger-print-outline" class="detail-icon"></ion-icon>
+                <p>DNI / Cédula: <span>1.123.456.789</span></p>
+            </div>
+            <div class="detail-item">
+                <ion-icon name="call-outline" class="detail-icon"></ion-icon>
+                <p>Teléfono: <span>+57 300 123 4567</span></p>
+            </div>
+            <div class="detail-item">
+                <ion-icon name="location-outline" class="detail-icon"></ion-icon>
+                <p>Dirección: <span>Carrera 10 # 5-20, Bogotá</span></p>
+            </div>
+        </div>
+      
+      </ion-card-content>
+    </ion-card>
+    
+    <div class="dashboard-grid">
+        
+        <ion-card class="grid-card pedidos-card" button routerLink="/mis-pedidos">
+            <ion-card-content>
+                <ion-icon name="cart-outline" class="card-icon primary-icon"></ion-icon>
+                <ion-card-title>Mis Pedidos</ion-card-title>
+                <p>Historial de compras y seguimiento.</p>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card class="grid-card" button>
+            <ion-card-content>
+                <ion-icon name="lock-closed-outline" class="card-icon"></ion-icon>
+                <ion-card-title>Seguridad</ion-card-title>
+                <p>Contraseña y autenticación.</p>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card class="grid-card" button>
+            <ion-card-content>
+                <ion-icon name="card-outline" class="card-icon"></ion-icon>
+                <ion-card-title>Tarjetas</ion-card-title>
+                <p>Medios de pago guardados.</p>
+            </ion-card-content>
+        </ion-card>
+        
+        <ion-card class="grid-card" button>
+            <ion-card-content>
+                <ion-icon name="pin-outline" class="card-icon"></ion-icon>
+                <ion-card-title>Direcciones</ion-card-title>
+                <p>Gestiona tus direcciones de envío y facturación.</p>
+            </ion-card-content>
+        </ion-card>
+
+    </div>
+
+   <div class="logout-container">
+    <ion-button expand="block" class="logout-button elegant-logout">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Cerrar Sesión </ion-button>
+    </div>
+    
+  </div>
 </ion-content>
