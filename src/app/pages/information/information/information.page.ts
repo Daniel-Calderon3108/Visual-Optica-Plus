@@ -5,8 +5,7 @@ import {
   IonContent,
   IonHeader,
   IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+  IonToolbar, IonButtons, IonBackButton, IonIcon } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/shared/components/header/header/header.component';
 
 import {
@@ -28,7 +27,7 @@ import { ActivatedRoute, Route } from '@angular/router';
   templateUrl: './information.page.html',
   styleUrls: ['./information.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonIcon, IonBackButton, IonButtons, 
     IonContent,
     IonHeader,
     IonTitle,
