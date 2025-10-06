@@ -8,10 +8,15 @@ export class FunctionService {
 
   userActual: any = null;
 
+
   constructor(private router: Router) { }
 
   // Navegar a una URL específica
-  navigateTo(url: string): void {
+  navigateTo(url: string, data: string = ""): void {
+    if (data) {
+      this.router.navigate([url, data]);  
+      return;
+    }
     this.router.navigateByUrl(url);
   }
 
