@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+/*import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { IonButton, IonContent, IonIcon, IonTitle, IonHeader, IonToolbar, IonLabel, IonItem, IonList, IonMenu, MenuController } from "@ionic/angular";
@@ -53,4 +53,4 @@ export class MenuComponent implements OnInit {
     await this.authService.logout();
   }
 
-}
+}*/

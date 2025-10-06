@@ -11,7 +11,7 @@ import {
   IonRouterOutlet
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from './shared/components/header/header/header.component';
-import { MenuComponent } from './shared/components/menu/menu/menu.component';
+//import { MenuComponent } from './shared/components/menu/menu/menu.component';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +27,7 @@ import { MenuComponent } from './shared/components/menu/menu/menu.component';
     IonItem,
     IonRouterOutlet,
     HeaderComponent,
-    MenuComponent
+    //MenuComponent
   ],
   standalone: true
 })
