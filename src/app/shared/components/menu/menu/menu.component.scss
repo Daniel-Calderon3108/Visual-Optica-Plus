@@ -1,0 +1,125 @@
+/* --- Estilos Generales del Menú --- */
+ion-menu {
+  // Asegura que el color de fondo de todo el menú sea blanco
+  --background: var(--white); 
+}
+
+/* --- Encabezado y Logo --- */
+ion-header {
+  box-shadow: none; // Elimina la sombra por defecto del header
+}
+
+.menu-toolbar {
+  --background: var(--white); 
+  --border-color: transparent; // Elimina la línea de la toolbar
+}
+
+ion-title {
+  padding: 0;
+  display: flex;
+  align-items: center;
+
+  img.menu-logo {
+    height: 28px;
+    width: auto;
+    margin-right: 10px;
+  }
+
+  span.menu-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-text-dark);
+  }
+}
+
+/* --- Contenido y Lista de Opciones --- */
+ion-content.menu-content {
+  --padding-top: var(--space);
+  --padding-bottom: var(--space);
+  display: flex;
+  flex-direction: column;
+}
+
+/* * Ajustamos ion-title.menu-list para eliminar el padding
+* innecesario que genera y lo reemplazamos en ion-item.
+*/
+ion-title.menu-list {
+  padding: 0;
+  min-height: 0;
+  margin: 0;
+}
+
+ion-item {
+  --padding-start: var(--space);
+  --padding-end: var(--space);
+  --inner-padding-end: 10px;
+  --inner-border-width: 0; // Elimina las líneas divisorias
+  color: var(--color-text);
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  
+  // Altura estándar para todos los items del menú
+  --min-height: 48px;
+
+  // Estilo al pasar el mouse o al ser presionado
+  &:hover {
+    --background: var(--secondary-color);
+  }
+  
+  // Iconos
+  ion-icon {
+    font-size: 1.4rem;
+    color: var(--primary-color); // Íconos en tu color primario (azul)
+    margin-right: 15px;
+  }
+
+  // Label
+  ion-label {
+    font-weight: 500;
+  }
+}
+
+/* --- Botón de Cierre de Sesión (Fijo en la parte inferior) --- */
+.logout-button {
+  // Usa flexbox para empujar el botón al final del contenido
+  margin-top: auto; 
+  padding: var(--space); // Usa tu variable de espaciado
+  padding-top: 10px; // Un poco menos de espacio arriba si es necesario
+  width: 100%;
+}
+
+.btn-logout {
+  --background: transparent;
+  --color: var(--danger); // Texto e ícono en rojo
+  --border-color: var(--danger);
+  --border-style: solid;
+  --border-width: 1px;
+  --box-shadow: none;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  
+  height: 48px;
+  border-radius: 12px; // Usando el radio de borde de tus inputs/botones
+  font-weight: bold;
+  
+  // ELIMINA MAYÚSCULAS AUTOMÁTICAS (Fix clave)
+  --text-transform: none; 
+
+  // Ajusta el ícono del botón para que esté visible
+  ion-icon {
+    color: var(--danger);
+    font-size: 1.4rem;
+    margin-inline-end: 10px;
+    margin-inline-start: 0; // Sobrescribe el margen de ion-item
+  }
+  
+  ion-label {
+      // Ajusta la etiqueta dentro del botón para que no sea azul
+      color: var(--danger); 
+  }
+
+  &:hover, &:focus {
+    // Genera un ligero fondo rojo al interactuar
+    --background: rgba(255, 59, 48, 0.08); 
+  }
+}
