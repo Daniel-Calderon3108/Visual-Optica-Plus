@@ -1,3 +1,74 @@
-<p>
-  menu works!
-</p>
+<ion-menu side="end" menuId="main-menu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar class="menu-toolbar">
+      <ion-title>
+        <img src="assets/logo.png" alt="Logo" class="menu-logo">
+        <span class="menu-title">Optica Plus</span>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-menu>
+
+<ion-content class="menu-content">
+  <!--Informacion del usuario-->
+
+  <!--Opciones del menu-->
+  <ion-title class="menu-list">
+    <ion-item button (click) = "navegarA('/welcome')" detail="false">
+      <ion-icon name="home" slot="start"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-item>
+  </ion-title>
+
+  <ion-title class="menu-list">
+    <ion-item button (click) = "navegarA('/profile')" detail="false">
+      <ion-icon name="person" slot="start"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-item>
+  </ion-title>
+
+  <ion-title class="menu-list">
+    <ion-item button (click) = "navegarA('/welcome')" detail="false">
+      <ion-icon name="home" slot="start"></ion-icon>
+      <ion-label>Agendar Cita</ion-label>
+    </ion-item>
+  </ion-title>
+
+
+  <ion-title class="menu-list">
+    <ion-item button (click) = "navegarA('/products')" detail="false">
+      <ion-icon name="heart" slot="start"></ion-icon>
+      <ion-label>Favoritos</ion-label>
+    </ion-item>
+  </ion-title>
+
+  <ion-title class="menu-list">
+    <ion-item button (click) = "navegarA('/welcome')" detail="false">
+      <ion-icon name="home" slot="start"></ion-icon>
+      <ion-label>Mis compras</ion-label>
+    </ion-item>
+  </ion-title>
+
+  <ion-title class="menu-list">
+    <ion-item button (click) = "navegarA('/welcome')" detail="false">
+      <ion-icon name="bag-handle" slot="start"></ion-icon>
+      <ion-label>Tiendas</ion-label>
+    </ion-item>
+  </ion-title>
+
+  <ion-title class="menu-list">
+    <ion-item button (click) = "navegarA('/welcome')" detail="false">
+      <ion-icon name="settings" slot="start"></ion-icon>
+      <ion-label>Ajustes</ion-label>
+    </ion-item>
+  </ion-title>
+
+  <!--Botón de cierre de sesión-->
+  <div class="logout-button">
+    <ion-button expand="block" (click)="cerrarSesion()" class="btn-logout">
+      <ion-icon name="log-out" slot="start"></ion-icon>
+      <ion-label>Cerrar Sesión</ion-label>
+    </ion-button>
+  </div>
+
+</ion-content>
