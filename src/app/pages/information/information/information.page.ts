@@ -1,54 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar, IonButtons, IonBackButton, IonIcon } from '@ionic/angular/standalone';
+  IonContent, IonCard, IonCardHeader, IonCardTitle,
+  IonCardContent, IonImg, IonButton
+} from '@ionic/angular/standalone';
+import { ProductsService, Product } from 'src/app/services/products.service';
 import { HeaderComponent } from 'src/app/shared/components/header/header/header.component';
 
-import {
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonCardContent,
-  IonButton,
-  IonImg,
-} from '@ionic/angular/standalone';
-import { ActivatedRoute, Route } from '@angular/router';
-
 @Component({
+  standalone: true,
   selector: 'app-information',
   templateUrl: './information.page.html',
   styleUrls: ['./information.page.scss'],
-  standalone: true,
-  imports: [IonIcon, IonBackButton, IonButtons, 
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    HeaderComponent,
-    IonGrid,
-    IonRow,
-    IonCol,
+  imports: [
+    CommonModule, HeaderComponent,
+    IonContent, IonCard, IonCardHeader, IonCardTitle,
+    IonCardContent, IonImg, IonButton
   ],
 })
 export class InformationPage implements OnInit {
-  constructor(private route:ActivatedRoute) {}
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private products = inject(ProductsService);
 
-  id: string='';
-  
+  product: Product | null = null;
+
   ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id')||'';
-      console.log('ID recibido:', this.id);
-    });
+    const slug = this.route.snapshot.paramMap.get('slug') ?? '';
+    this.product = this.products.getBySlug(slug);
+    if (!this.product) this.router.navigateByUrl('/products');
   }
+
+  addToCart(p: Product) { console.log('ADD TO CART', p); }
 }
+

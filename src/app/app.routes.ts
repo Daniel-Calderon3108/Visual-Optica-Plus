@@ -32,7 +32,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/products/products.page').then( m => m.ProductsPage)
   },
   {
-    path: 'information/:data',
+    path: 'information/:slug',
     loadComponent: () => import('./pages/information/information/information.page').then( m => m.InformationPage)
   },
 

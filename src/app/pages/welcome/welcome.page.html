@@ -9,16 +9,16 @@
             <ion-card class="prod-card">
 
               <ion-card-header class="prod-head">
-                <ion-card-title class="prod-title">{{ producto.nombre }}</ion-card-title>
+                <ion-card-title class="prod-title">{{ producto.name }}</ion-card-title>
               </ion-card-header>
 
               <div class="prod-img-wrap">
-                <ion-img [src]="producto.imagen" alt="{{ producto.nombre }}"></ion-img>
+                <ion-img [src]="producto.image" alt="{{ producto.name }}"></ion-img>
               </div>
 
               <ion-card-content class="prod-body">
-              <div class="prod-price">{{ producto.precio | currency:'USD':'symbol':'1.0-0' }}</div>
-              <ion-button expand="block" size="small" shape="round" (click)="verDetalle(producto.nombre)">
+              <div class="prod-price">{{ producto.price | currency:'USD':'symbol':'1.0-0' }}</div>
+              <ion-button expand="block" size="small" shape="round" (click)="verDetalle(producto)">
                 Más información
               </ion-button>
             </ion-card-content>
@@ -38,16 +38,16 @@
             <ion-card class="prod-card">
 
               <ion-card-header class="prod-head">
-                <ion-card-title class="prod-title">{{ producto.nombre }}</ion-card-title>
+                <ion-card-title class="prod-title">{{ producto.name }}</ion-card-title>
               </ion-card-header>
 
               <div class="prod-img-wrap">
-                <ion-img [src]="producto.imagen" alt="{{ producto.nombre }}"></ion-img>
+                <ion-img [src]="producto.image" alt="{{ producto.name }}"></ion-img>
               </div>
 
               <ion-card-content class="prod-body">
-              <div class="prod-price">{{ producto.precio | currency:'USD':'symbol':'1.0-0' }}</div>
-              <ion-button expand="block" size="small" shape="round" (click)="verDetalle(producto.nombre)">
+              <div class="prod-price">{{ producto.price | currency:'USD':'symbol':'1.0-0' }}</div>
+              <ion-button expand="block" size="small" shape="round" (click)="verDetalle(producto)">
                 Más información
               </ion-button>
             </ion-card-content>
