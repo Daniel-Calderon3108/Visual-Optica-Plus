@@ -1,8 +1,63 @@
 <ion-content>
+
   <body class="screen">
     <app-header></app-header>
-    <section class="container container-home">
+    <section class="container-home">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6" size-md="3" size-lg="4" *ngFor="let producto of productos">
+            <ion-card class="prod-card">
 
+              <ion-card-header class="prod-head">
+                <ion-card-title class="prod-title">{{ producto.nombre }}</ion-card-title>
+              </ion-card-header>
+
+              <div class="prod-img-wrap">
+                <ion-img [src]="producto.imagen" alt="{{ producto.nombre }}"></ion-img>
+              </div>
+
+              <ion-card-content class="prod-body">
+              <div class="prod-price">{{ producto.precio | currency:'USD':'symbol':'1.0-0' }}</div>
+              <ion-button expand="block" size="small" shape="round" (click)="verDetalle(producto.nombre)">
+                Más información
+              </ion-button>
+            </ion-card-content>
+
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+    
+    <section class="container-home">
+      <h1>Productos recomendados</h1>
+      <ion-grid>
+        
+        <ion-row>     
+          <ion-col size="12" size-md="6" size-md="3" size-lg="4" *ngFor="let producto of productos">
+            <ion-card class="prod-card">
+
+              <ion-card-header class="prod-head">
+                <ion-card-title class="prod-title">{{ producto.nombre }}</ion-card-title>
+              </ion-card-header>
+
+              <div class="prod-img-wrap">
+                <ion-img [src]="producto.imagen" alt="{{ producto.nombre }}"></ion-img>
+              </div>
+
+              <ion-card-content class="prod-body">
+              <div class="prod-price">{{ producto.precio | currency:'USD':'symbol':'1.0-0' }}</div>
+              <ion-button expand="block" size="small" shape="round" (click)="verDetalle(producto.nombre)">
+                Más información
+              </ion-button>
+            </ion-card-content>
+
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+ 
     </section>
   </body>
 </ion-content>

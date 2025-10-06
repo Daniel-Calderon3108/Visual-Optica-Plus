@@ -26,12 +26,18 @@ export const routes: Routes = [
     path: 'profile',
     loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
   },
-  {
-    path: '**',
-    redirectTo: 'splash'
-  },
+  
   {
     path: 'products',
     loadComponent: () => import('./pages/products/products.page').then( m => m.ProductsPage)
   },
+  {
+    path: 'information/:data',
+    loadComponent: () => import('./pages/information/information/information.page').then( m => m.InformationPage)
+  },
+
+  // {
+  //   path: '**',
+  //   redirectTo: 'splash'
+  // },
 ];
