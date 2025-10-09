@@ -3,17 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonContent, IonCard, IonCardHeader, IonCardTitle,
-  IonCardContent, IonImg, IonButton
-} from '@ionic/angular/standalone';
+  IonCardContent, IonImg, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { ProductsService, Product } from 'src/app/services/products.service';
 import { HeaderComponent } from 'src/app/shared/components/header/header/header.component';
+import { addIcons } from 'ionicons';
+import { heart, star } from 'ionicons/icons';
 
 @Component({
   standalone: true,
   selector: 'app-information',
   templateUrl: './information.page.html',
   styleUrls: ['./information.page.scss'],
-  imports: [
+  imports: [IonIcon, 
     CommonModule, HeaderComponent,
     IonContent, IonCard, IonCardHeader, IonCardTitle,
     IonCardContent, IonImg, IonButton
@@ -30,6 +31,7 @@ export class InformationPage implements OnInit {
     const slug = this.route.snapshot.paramMap.get('slug') ?? '';
     this.product = this.products.getBySlug(slug);
     if (!this.product) this.router.navigateByUrl('/products');
+    addIcons({ heart, star });
   }
 
   addToCart(p: Product) { console.log('ADD TO CART', p); }

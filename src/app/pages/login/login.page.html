@@ -15,7 +15,7 @@
           <label class="container-input">
               <img src="assets/icon/key.svg" alt="">
               <input type="password" formControlName="password">
-              <p class="forgot-password">¿Olvidaste tu contraseña?</p>
+              <p class="forgot-password" (click)="navigateTo('/forget-password')">¿Olvidaste tu contraseña?</p>
           </label>
           <button (click)="onLogin()" [disabled]="form.invalid" class="btn btn-primary">INICIAR SESIÓN</button>
           <button class="btn btn-primary btn-google">
@@ -24,7 +24,7 @@
           </button>
           <p class="link link-register">
             <span>No tienes cuenta?</span> 
-            <i (click)="navigateToRegister()" class="link"> Registrate</i>
+            <i (click)="navigateTo('/register')" class="link"> Registrate</i>
           </p>
        </form>
      </section>

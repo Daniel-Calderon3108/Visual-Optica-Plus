@@ -2,8 +2,52 @@
   <body class="screen">
     <app-header></app-header>
 
-    <section class="container container-home">
-      <ion-card class="prod-card">
+    <section class="container container-product">
+      <article class="carrousel-article">
+        <div class="carrousel-img">
+          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
+        </div>
+        <div class="carrousel-img">
+          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
+        </div>
+        <div class="carrousel-img">
+          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
+        </div>
+        <div class="carrousel-img">
+          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
+        </div>
+      </article>
+      <article class="products-article">
+        <ion-icon name="heart" class="favorite"
+          title="Agregar a Favorito"></ion-icon>
+        <h1>{{ p.name }}</h1>
+        <section class="info-product">
+          <article class="info-left">
+            <figure class="info-figure">
+              <img src="{{ p.image }}" alt="{{ p.name }}" class="info-img">
+            </figure>
+            <p class="colors">Colores disponibles:
+              <span class="colors-available black"></span>
+              <span class="colors-available blue"></span>
+            </p>
+          </article>
+          <article class="info-right">
+            <p class="description">{{ p.description }}</p>
+            <p class="price">{{ p.price | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+            <div class="reviews">
+              <ion-icon name="star" class="star"></ion-icon>
+              <ion-icon name="star" class="star"></ion-icon>
+              <ion-icon name="star" class="star"></ion-icon>
+              <ion-icon name="star" class="star"></ion-icon>
+              <ion-icon name="star" class="star"></ion-icon>
+            </div>
+            <ion-button expand="block" shape="round" (click)="addToCart(p)">
+              Agregar al carrito
+            </ion-button>
+          </article>
+        </section>
+      </article>
+      <!-- <ion-card class="prod-card">
         <ion-card-header>
           <ion-card-title class="prod-title">{{ p.name }}</ion-card-title>
         </ion-card-header>
@@ -22,7 +66,7 @@
             Agregar al carrito
           </ion-button>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
     </section>
   </body>
 </ion-content>

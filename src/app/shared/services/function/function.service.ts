@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 export class FunctionService {
 
   userActual: any = null;
+  token: string = '';
 
 
   constructor(private router: Router) { }
@@ -44,5 +45,22 @@ export class FunctionService {
   getUserInitials(): string {
     if (!this.userActual) return 'I';
     return `${this.userActual.name.charAt(0)}${this.userActual.lastName.charAt(0)}`;
+  }
+
+  // Generar un token aleatorio
+  async generateToken() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for (let i = 0; i < 16; i++) {
+      token += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    await this.saveToken(token);
+    return token;
+  }
+
+  // Guardar el token en el almacenamiento local
+  async saveToken(token: string) {
+    localStorage.setItem('token', token);
+    this.token = token;
   }
 }

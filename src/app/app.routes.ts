@@ -35,9 +35,16 @@ export const routes: Routes = [
     path: 'information/:slug',
     loadComponent: () => import('./pages/information/information/information.page').then( m => m.InformationPage)
   },
-
-  // {
-  //   path: '**',
-  //   redirectTo: 'splash'
-  // },
+  {
+    path: 'forget-password',
+    loadComponent: () => import('./pages/foget.password/forget.password/forget.password.page').then( m => m.ForgetPasswordPage)
+  },
+  {
+    path: 'reset-password/:token',
+    loadComponent: () => import('./pages/reset.password/reset.password/reset.password.page').then( m => m.ResetPasswordPage)
+  },
+  {
+    path: '**',
+    redirectTo: 'splash'
+  },
 ];

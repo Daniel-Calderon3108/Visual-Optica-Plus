@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  navigateToRegister = () => this.functionService.navigateTo('/register'); 
+  navigateTo = (url : string) => this.functionService.navigateTo(url); 
 
   onLogin() {
     if(this.form.valid) {

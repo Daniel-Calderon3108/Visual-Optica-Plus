@@ -2,84 +2,155 @@
   <body class="screen">
     <app-header></app-header>
     <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <ion-toolbar>
+        <ion-title size="large">Profile</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-  <div class="profile-container">
-    
-    <ion-card class="profile-summary-card">
-      <ion-card-content class="profile-header-content">
-        
-        <div class="profile-header">
-          <div class="avatar-circle">UE</div>
-          <div class="info-text">
-            <h2 class="name-text">Example User</h2>
-            <p class="email-text">exampleuser@email.com</p>
+    <div class="profile-container">
+
+      <ion-card class="profile-summary-card">
+        <ion-card-content class="profile-header-content">
+          <ion-icon name="create-outline" class="edit-icon"
+            title="Editar Perfil" (click)="setOpen(true)"></ion-icon>
+          <div class="profile-header">
+            <div class="avatar-circle">{{ getInitials }}</div>
+            <div class="info-text">
+              <h2 class="name-text">{{ getCompleteName }}</h2>
+              <p class="user-text">@{{ userActual.user }}</p>
+            </div>
           </div>
-        </div>
-        
-        <div class="personal-details">
+
+          <div class="personal-details">
             <div class="detail-item">
-                <ion-icon name="finger-print-outline" class="detail-icon"></ion-icon>
-                <p>DNI / Cédula: <span>1.123.456.789</span></p>
+              <ion-icon name="mail-outline" class="detail-icon"></ion-icon>
+              <p>Correo Electrónico: <span>{{ userActual.email }}</span></p>
             </div>
             <div class="detail-item">
-                <ion-icon name="call-outline" class="detail-icon"></ion-icon>
-                <p>Teléfono: <span>+57 300 123 4567</span></p>
+              <ion-icon name="call-outline" class="detail-icon"></ion-icon>
+              <p>Teléfono: <span>+57 {{ userActual.phone }}</span></p>
             </div>
-            <div class="detail-item">
-                <ion-icon name="location-outline" class="detail-icon"></ion-icon>
-                <p>Dirección: <span>Carrera 10 # 5-20, Bogotá</span></p>
-            </div>
-        </div>
-      
-      </ion-card-content>
-    </ion-card>
-    
-    <div class="dashboard-grid">
-        
-        <ion-card class="grid-card pedidos-card" button routerLink="/mis-pedidos">
-            <ion-card-content>
-                <ion-icon name="cart-outline" class="card-icon primary-icon"></ion-icon>
-                <ion-card-title>Mis Pedidos</ion-card-title>
-                <p>Historial de compras y seguimiento.</p>
-            </ion-card-content>
+          </div>
+
+        </ion-card-content>
+      </ion-card>
+
+      <div class="dashboard-grid">
+
+        <ion-card class="grid-card pedidos-card" button
+          routerLink="/mis-pedidos">
+          <ion-card-content>
+            <ion-icon name="cart-outline"
+              class="card-icon primary-icon"></ion-icon>
+            <ion-card-title>Mis Pedidos</ion-card-title>
+            <p>Historial de compras y seguimiento.</p>
+          </ion-card-content>
         </ion-card>
 
         <ion-card class="grid-card" button>
-            <ion-card-content>
-                <ion-icon name="lock-closed-outline" class="card-icon"></ion-icon>
-                <ion-card-title>Seguridad</ion-card-title>
-                <p>Contraseña y autenticación.</p>
-            </ion-card-content>
+          <ion-card-content>
+            <ion-icon name="lock-closed-outline"
+              class="card-icon primary-icon"></ion-icon>
+            <ion-card-title>Seguridad</ion-card-title>
+            <p>Contraseña y autenticación.</p>
+          </ion-card-content>
         </ion-card>
 
         <ion-card class="grid-card" button>
-            <ion-card-content>
-                <ion-icon name="card-outline" class="card-icon"></ion-icon>
-                <ion-card-title>Tarjetas</ion-card-title>
-                <p>Medios de pago guardados.</p>
-            </ion-card-content>
+          <ion-card-content>
+            <ion-icon name="location-outline"
+              class="card-icon primary-icon"></ion-icon>
+            <ion-card-title>Direcciones</ion-card-title>
+            <p>Gestiona tus direcciones de envío y facturación.</p>
+          </ion-card-content>
         </ion-card>
-        
-        <ion-card class="grid-card" button>
-            <ion-card-content>
-                <ion-icon name="pin-outline" class="card-icon"></ion-icon>
-                <ion-card-title>Direcciones</ion-card-title>
-                <p>Gestiona tus direcciones de envío y facturación.</p>
-            </ion-card-content>
-        </ion-card>
+
+      </div>
+
+      <!-- Eliminar Cuenta -->
+      <div class="logout-container" (click)="deleteAccount()">
+        <ion-button expand="block" class="logout-button elegant-logout">
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Eliminar Cuenta
+        </ion-button>
+      </div>
+
+      <!-- Cerrar Sesión -->
+      <div class="logout-container" (click)="logout()">
+        <ion-button expand="block" class="logout-button elegant-logout">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          Cerrar Sesión </ion-button>
+      </div>
 
     </div>
-
-   <div class="logout-container">
-    <ion-button expand="block" class="logout-button elegant-logout">
-      <ion-icon name="log-out-outline" slot="start"></ion-icon>
-      Cerrar Sesión </ion-button>
-    </div>
-    
-  </div>
   </body>
+
+  <!-- Modal para editar perfil -->
+  <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="true"
+    (ionModalDidDismiss)="onModalDidDismiss($event)"
+    (ionModalDidPresent)="onModalDidPresent($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title style="margin: 10px;">Editar Perfil</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding container-form">
+        <form [formGroup]="form" autocomplete="off" style="margin: 20px auto;">
+          <label class="container-input">
+            <p class="labels">Nombre</p>
+            <input type="text" formControlName="firstName"
+              [ngClass]="{'error': form.get('firstName')?.invalid && form.get('firstName')?.dirty}">
+            @if (form.get('firstName')?.invalid && form.get('firstName')?.dirty)
+            {
+            <div class="error-message">El nombre es obligatorio.</div>
+            }
+          </label>
+          <label class="container-input">
+            <p class="labels">Apellido</p>
+            <input type="text" formControlName="lastName"
+              [ngClass]="{'error': form.get('lastName')?.invalid && form.get('lastName')?.dirty}">
+            @if (form.get('lastName')?.invalid && form.get('lastName')?.dirty) {
+            <div class="error-message">El apellido es obligatorio.</div>
+            }
+          </label>
+          <label class="container-input">
+            <p class="labels">Correo Electrónico</p>
+            <input type="email" formControlName="email"
+              [ngClass]="{'error': form.get('email')?.invalid && form.get('email')?.dirty}">
+            @if (form.get('email')?.invalid && form.get('email')?.dirty) {
+            <div class="error-message">
+              @if (form.get('email')?.errors?.['required']) {
+              El correo electrónico es obligatorio.
+              } @else if (form.get('email')?.errors?.['email']) {
+              Formato de correo electrónico inválido.
+              }
+            </div>
+            }
+          </label>
+          <label class="container-input">
+            <p class="labels">Teléfono</p>
+            <input type="text" formControlName="phone"
+              [ngClass]="{'error': form.get('phone')?.invalid && form.get('phone')?.dirty}">
+            @if (form.get('phone')?.invalid && form.get('phone')?.dirty) {
+            <div class="error-message">
+              @if (form.get('phone')?.errors?.['required']) {
+              El teléfono es obligatorio.
+              } @else if (form.get('phone')?.errors?.['minlength'] ||
+              form.get('phone')?.errors?.['maxlength']) {
+              El teléfono debe tener 10 dígitos.
+              }
+            </div>
+            }
+          </label>
+          <button (click)="onSaveChanges()" [disabled]="form.invalid"
+            class="btn btn-primary">GUARDAR CAMBIOS</button>
+
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

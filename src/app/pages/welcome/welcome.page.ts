@@ -16,12 +16,14 @@ import { ProductsService, Product } from 'src/app/services/products.service';
   standalone: true,
   imports: [
     IonContent, CommonModule, FormsModule, HeaderComponent,
-    IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
-    IonCardSubtitle, IonCardContent, IonButton, IonImg,
+    IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, 
+    IonCardContent, IonButton, IonImg,
   ],
 })
 export class WelcomePage implements OnInit {
   productos: Product[] = [];
+
+  nameUser: string = this.functionService.getCompleteName();
 
   constructor(
     private functionService: FunctionService,

@@ -109,13 +109,17 @@ input,
 .link {
     width: max-content;
     margin: auto;
-    cursor: pointer;
     margin-bottom: 10px;
 }
 
 i.link {
     font-style: normal;
     color: var(--primary-color);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--white);
+    }
 }
 
 /* Estilos iniciales de la APP */
@@ -246,12 +250,17 @@ i.link {
             position: absolute;
             top: -15px;
             font-size: 0.8rem;
-            color: var(--color-text-dark); 
+            color: var(--color-text-dark);
         }
 
         .forgot-password {
             right: 0;
             cursor: pointer;
+            transition: color 0.3s;
+
+            &:hover {
+                color: var(--primary-color);
+            }
         }
         
         .labels {
