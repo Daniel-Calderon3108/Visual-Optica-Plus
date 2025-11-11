@@ -59,7 +59,11 @@
               <p class="labels">Contraseña</p>
               <input type="password" formControlName="password" [ngClass]="{'error': form.get('password')?.invalid && form.get('password')?.dirty}">
               @if (form.get('password')?.invalid && form.get('password')?.dirty) {
-                <div class="error-message">La contraseña es obligatoria.</div>
+                @if(form.get('password')?.errors?.['required']) {
+                  <div class="error-message">La contraseña es obligatoria.</div>
+                } @else if(form.get('password')?.errors?.['pattern']) {
+                  <div class="error-message">La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número.</div>
+                }
               }
           </label>
           <label class="container-input">

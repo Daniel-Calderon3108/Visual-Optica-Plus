@@ -1,3 +1,7 @@
+.container {
+  max-width: 100%;
+}
+
 .container-product {
   display: flex;
   flex-direction: row;
@@ -105,6 +109,10 @@
   font-size: 24px;
   color: #000;
   cursor: pointer;
+
+  &.favorite-active {
+    color: red;
+  }
 }
 
 .reviews {
@@ -116,5 +124,96 @@
   .star {
     color: gold;
     font-size: 20px;
+
+    &.empty {
+      color: black;
+    }
+  }
+}
+
+.paginator-products {
+  display: none;
+}
+
+// Details article
+.details-article {
+  width: 100%;
+}
+
+.title-detail {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+  color: black;
+}
+
+.details {
+  display: flex;
+  gap: 20px;
+}
+
+.left, .right {
+  flex: 1;
+  padding: 5px;
+}
+
+.left {
+  border-right: 1px solid var(--primary-color);
+}
+
+h2 {
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+p {
+  color: black;
+  font-size: 13px;
+}
+
+@media screen and (max-width: 768px) {
+  .container-product {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .info-product {
+    flex-direction: column;
+  }
+
+  .carrousel-article {
+    display: none;
+  }
+
+  .carrousel-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .info-left .info-figure {
+    height: 200px;
+  }
+
+  .quantity {
+    margin: 10px 0;
+  }
+
+  .paginator-products {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+
+    .item {
+      display: block;
+      width: 10px;
+      height: 10px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      cursor: pointer;
+    }
   }
 }

@@ -14,10 +14,7 @@ export interface Cart {
     product: Product;
     quantity: number;
 }
-
-Injectable({ 
-    providedIn: 'root' 
-})
+@Injectable({ providedIn: 'root' })
 export class CartService {
     private cart: Cart[] = [];
 

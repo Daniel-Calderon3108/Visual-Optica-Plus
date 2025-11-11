@@ -25,16 +25,17 @@ export class ProfilePage implements OnInit {
 
   isModalOpen = false;
 
-  userActual : any;
+  userActual: any;
   getCompleteName = this.functionService.getCompleteName();
   getInitials = this.functionService.getUserInitials();
 
-  constructor(private functionService : FunctionService) { 
-    addIcons({createOutline,mailOutline,callOutline,cartOutline,lockClosedOutline,locationOutline,trashOutline,logOutOutline,create});
+  constructor(private functionService: FunctionService) {
+    addIcons({ createOutline, mailOutline, callOutline, cartOutline, lockClosedOutline, locationOutline, trashOutline, logOutOutline, create });
   }
 
   ngOnInit() {
     this.userActual = this.functionService.getUserActual();
+    this.setInputValues();
   }
 
   setOpen(isOpen: boolean) {
@@ -49,16 +50,28 @@ export class ProfilePage implements OnInit {
     this.isModalOpen = false;
   }
 
+  setInputValues() {
+    this.form.setValue({
+      firstName: this.userActual.name || '',
+      lastName: this.userActual.lastName || '',
+      email: this.userActual.email || '',
+      phone: this.userActual.phone || ''
+    });
+  }
+
   onSaveChanges() {
     if (this.form.valid) {
       let userData = JSON.parse(localStorage.getItem('user') || '{}');
-      userData.firstName = this.form.value.firstName || userData.firstName;
+      userData.name = this.form.value.firstName || userData.name;
       userData.lastName = this.form.value.lastName || userData.lastName;
       userData.email = this.form.value.email || userData.email;
       userData.phone = this.form.value.phone || userData.phone;
       localStorage.setItem('user', JSON.stringify(userData));
       alert('Perfil actualizado con éxito');
       this.userActual = this.functionService.getUserActual();
+      this.getInitials = this.functionService.getUserInitials();
+      this.getCompleteName = this.functionService.getCompleteName();
+      this.setInputValues();
       this.isModalOpen = false;
       return;
     }

@@ -15,7 +15,7 @@ import { FunctionService } from 'src/app/shared/services/function/function.servi
 export class ResetPasswordPage implements OnInit {
 
   form = new FormGroup({
-    newPassword: new FormControl('', [Validators.required]),
+    newPassword: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)]),
     confirmPassword: new FormControl('', [Validators.required]),
   });
 

@@ -2,72 +2,93 @@
   <body class="screen">
     <app-header></app-header>
 
-    <section class="container container-product">
-      <article class="carrousel-article">
-        <div class="carrousel-img">
-          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
-        </div>
-        <div class="carrousel-img">
-          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
-        </div>
-        <div class="carrousel-img">
-          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
-        </div>
-        <div class="carrousel-img">
-          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
-        </div>
-      </article>
-      <article class="products-article">
-        <ion-icon name="heart" class="favorite"
-          title="Agregar a Favorito"></ion-icon>
-        <h1>{{ p.name }}</h1>
-        <section class="info-product">
-          <article class="info-left">
-            <figure class="info-figure">
-              <img src="{{ p.image }}" alt="{{ p.name }}" class="info-img">
-            </figure>
-            <p class="colors">Colores disponibles:
-              <span class="colors-available black"></span>
-              <span class="colors-available blue"></span>
-            </p>
+    <section class="container">
+      <section class="container-product">
+        <article class="carrousel-article">
+          <div class="carrousel-img">
+            <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
+          </div>
+          <div class="carrousel-img">
+            <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
+          </div>
+          <div class="carrousel-img">
+            <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
+          </div>
+          <div class="carrousel-img">
+            <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
+          </div>
+        </article>
+        <article class="products-article">
+          <ion-icon name="heart" class="favorite"
+            title="Agregar a Favorito" id="heart"
+            (click)="toggleFavorite()"></ion-icon>
+          <h1>{{ p.name }}</h1>
+          <section class="info-product">
+            <article class="info-left">
+              <figure class="info-figure">
+                <img src="{{ p.image }}" alt="{{ p.name }}" class="info-img">
+              </figure>
+              <p class="colors">Colores disponibles:
+                <span class="colors-available black"></span>
+                <span class="colors-available blue"></span>
+              </p>
+              <p class="colors quantity">Cantidad disponible: {{ (p.stock - 4) > 0 ?
+                (p.stock - 4) : 0 }}</p>
+            </article>
+            <article class="info-right">
+              <p class="description">{{ p.description }}</p>
+              <p class="price">{{ p.price |
+                currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+              <div class="reviews">
+                <ion-icon name="star" class="star" id="start-0"
+                  (click)="setStar(0)"></ion-icon>
+                <ion-icon name="star" class="star" id="start-1"
+                  (click)="setStar(1)"></ion-icon>
+                <ion-icon name="star" class="star" id="start-2"
+                  (click)="setStar(2)"></ion-icon>
+                <ion-icon name="star" class="star" id="start-3"
+                  (click)="setStar(3)"></ion-icon>
+                <ion-icon name="star" class="star" id="start-4"
+                  (click)="setStar(4)"></ion-icon>
+              </div>
+              <ion-button expand="block" shape="round" (click)="addToCart(p)">
+                Agregar al carrito
+              </ion-button>
+              <article class="paginator-products">
+                <span class="item"></span>
+                <span class="item"></span>
+                <span class="item"></span>
+                <span class="item"></span>
+              </article>
+            </article>
+          </section>
+        </article>
+      </section>
+
+      <article class="details-article products-article">
+        <h2 class="title-detail">Mas Información</h2>
+        <section class="details">
+          <article class="left">
+            <h2>Descripción de la montura</h2>
+            <p>Forma de la montura: Cuadrada</p>
+            <p>Color de la montura: Negro</p>
+            <p>Material de la montura: Injectado</p>
+            <p>Color de las patillas: Gris</p>
+            <h2>Dimensiones del producto</h2>
+            <p>Calibre: 55 19mm</p>
+            <p>Altura de los cristales: 49.5mm</p>
+            <p>Longitud de las patillas: 150mm</p>
           </article>
-          <article class="info-right">
-            <p class="description">{{ p.description }}</p>
-            <p class="price">{{ p.price | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
-            <div class="reviews">
-              <ion-icon name="star" class="star"></ion-icon>
-              <ion-icon name="star" class="star"></ion-icon>
-              <ion-icon name="star" class="star"></ion-icon>
-              <ion-icon name="star" class="star"></ion-icon>
-              <ion-icon name="star" class="star"></ion-icon>
-            </div>
-            <ion-button expand="block" shape="round" (click)="addToCart(p)">
-              Agregar al carrito
-            </ion-button>
+          <article class="right">
+            <h2>Información sobre las lentes</h2>
+            <p>Color de los cristales: Gris Oscuro</p>
+            <p>Tratamiento de los cristales: Color sólido</p>
+            <h2>Cobertura del rostro</h2>
+            <p>Cobertura del rostro: Extra grande</p>
+            <p>Geofit: Ajuste del puente bajo</p>
           </article>
         </section>
       </article>
-      <!-- <ion-card class="prod-card">
-        <ion-card-header>
-          <ion-card-title class="prod-title">{{ p.name }}</ion-card-title>
-        </ion-card-header>
-
-        <div class="prod-img-wrap">
-          <ion-img [src]="p.image" alt="{{ p.name }}"></ion-img>
-        </div>
-
-        <ion-card-content class="prod-body">
-          <p class="prod-description">{{ p.description }}</p>
-          <p class="prod-price">
-            <strong>{{ p.price | currency:'COP':'symbol-narrow':'1.0-0' }}</strong>
-          </p>
-
-          <ion-button expand="block" shape="round" (click)="addToCart(p)">
-            Agregar al carrito
-          </ion-button>
-        </ion-card-content>
-      </ion-card> -->
     </section>
   </body>
 </ion-content>
-
