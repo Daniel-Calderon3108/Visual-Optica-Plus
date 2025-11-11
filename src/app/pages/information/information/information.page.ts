@@ -29,8 +29,11 @@ export class InformationPage implements OnInit {
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug') ?? '';
-    this.product = this.products.getBySlug(slug);
-    if (!this.product) this.router.navigateByUrl('/products');
+    
+    this.products.getProductBySlug(slug).then(product => {
+      this.product = product ?? null;
+      if (!this.product) this.router.navigateByUrl('/products');
+    });
     addIcons({ heart, star });
   }
 
