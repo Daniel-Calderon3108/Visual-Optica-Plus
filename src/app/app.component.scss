@@ -1,0 +1,20 @@
+#main-content {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 66px; /* Height of header - accounts for fixed header */
+}
+
+app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+ion-router-outlet {
+  display: block;
+  min-height: calc(100vh - 66px);
+}

@@ -1,7 +1,10 @@
 /* --- Estilos Generales del Menú --- */
 ion-menu {
   // Asegura que el color de fondo de todo el menú sea blanco
-  --background: var(--white); 
+  --background: var(--white);
+  --width: 280px;
+  --max-width: 85vw;
+  z-index: 10000;
 }
 
 /* --- Encabezado y Logo --- */
