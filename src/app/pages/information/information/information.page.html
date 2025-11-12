@@ -51,8 +51,12 @@
                 <ion-icon name="star" class="star" id="start-4"
                   (click)="setStar(4)"></ion-icon>
               </div>
-              <ion-button expand="block" shape="round" (click)="addToCart(p)">
-                Agregar al carrito
+              <ion-button expand="block" shape="round" (click)="addToCart(p)" [disabled]="isInTheCart">
+                @if (isInTheCart) {  
+                  <span>Agregado al carrito</span> 
+                } @else { 
+                  <span>Añadir al carrito</span> 
+                }
               </ion-button>
               <article class="paginator-products">
                 <span class="item"></span>

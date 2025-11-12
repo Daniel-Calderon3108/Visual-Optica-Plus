@@ -30,10 +30,8 @@ export class WelcomePage implements OnInit {
     private productsService: ProductsService
   ) {}
 
-  ngOnInit() {
-    this.productsService.getProducts().then(products => {
-      this.productos = products;
-    });
+  async ngOnInit() {
+    this.productos = await this.productsService.getProducts();
   }
 
   agregarAlCarrito(producto: Product) {

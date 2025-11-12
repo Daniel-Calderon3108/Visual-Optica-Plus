@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ export class FunctionService {
   userActual: any = null;
   token: string = '';
 
+  countCart: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  currentCountCart = this.countCart.asObservable();
 
   constructor(private router: Router) { }
 
@@ -62,5 +65,10 @@ export class FunctionService {
   async saveToken(token: string) {
     localStorage.setItem('token', token);
     this.token = token;
+  }
+
+  // Cambiar el conteo del carrito
+  changeCountCart(count: number) {
+    this.countCart.next(count);
   }
 }

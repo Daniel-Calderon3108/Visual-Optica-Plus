@@ -1,0 +1,120 @@
+.container {
+    max-width: 100%;
+    align-items: flex-start;
+}
+
+.cart-products {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.items, .summary {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.items {
+    flex-grow: 1;
+    overflow-y: auto;
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--primary-color);
+    }
+
+    .item-up, .item-down {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .item-down {
+        padding: 0 5px;
+    }
+
+    .item-left, .item-right {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+
+    figure {
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    button {
+        background-color: var(--primary-color);
+        color: var(--white);
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    span {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .remove {
+        color: var(--danger);
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
+.summary {
+    width: 300px;
+    padding: 20px 10px;
+    height: fit-content;
+    position: sticky;
+    top: 10px;
+
+    p {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        width: 100%;
+        background-color: var(--primary-color);
+        color: var(--white);
+        font-size: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 745px) {
+    .cart-products {
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .summary {
+        width: 100%;
+        position: static;
+        margin-top: 20px;
+    }
+}

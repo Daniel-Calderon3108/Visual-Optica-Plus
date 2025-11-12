@@ -23,11 +23,11 @@
     <!-- Botón de carrito -->
     <ion-button
       fill="clear"
-      class="icon-button">
+      class="icon-button" (click)="navigateToCart()">
       <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
-      <!-- @if (cartItemCount > 0) {
+      @if (cartItemCount > 0) {
         <ion-badge class="cart-badge">{{ cartItemCount }}</ion-badge>
-      } -->
+      }
     </ion-button>
 
     <!-- Botón de menú -->

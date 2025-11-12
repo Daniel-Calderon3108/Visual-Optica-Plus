@@ -2,14 +2,14 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  IonContent, IonCard, IonCardHeader, IonCardTitle,
-  IonCardContent, IonImg, IonButton, IonIcon
+  IonContent, IonImg, IonButton, IonIcon
 } from '@ionic/angular/standalone';
 import { ProductsService, Product } from 'src/app/services/products.service';
 import { HeaderComponent } from 'src/app/shared/components/header/header/header.component';
 import { addIcons } from 'ionicons';
 import { heart, star } from 'ionicons/icons';
 import { CartService } from 'src/app/services/cart.service';
+import { FunctionService } from 'src/app/shared/services/function/function.service';
 
 @Component({
   standalone: true,
@@ -27,16 +27,15 @@ export class InformationPage implements OnInit {
   private products = inject(ProductsService);
 
   product: Product | null = null;
+  isInTheCart: boolean = false;
 
-  constructor(private cartService: CartService) { }
+  constructor(private functionService: FunctionService, private cartService: CartService) {
+      addIcons({heart,star}); }
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug') ?? '';
+    this.getProduct(slug);
 
-    this.products.getProductBySlug(slug).then(product => {
-      this.product = product ?? null;
-      if (!this.product) this.router.navigateByUrl('/products');
-    });
     addIcons({ heart, star });
   }
 
@@ -60,8 +59,21 @@ export class InformationPage implements OnInit {
     }
   }
 
-  addToCart(p: Product) { 
+  async addToCart(p: Product) {
     this.cartService.addToCart(p);
-   }
+    this.isInTheCart = true;
+    this.functionService.changeCountCart(await this.cartService.getTotalProducts());
+  }
+
+  private getProduct(slug: string) {
+    this.products.getProductBySlug(slug).then(product => {
+      this.product = product ?? null;
+      if (!this.product) this.router.navigateByUrl('/products');
+
+      const cart = this.cartService.getItems().then(items => {
+        this.isInTheCart = items.some(item => item.product.id === this.product?.id);
+      });
+    });
+  }
 }
 
