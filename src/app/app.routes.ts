@@ -44,6 +44,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/reset.password/reset.password/reset.password.page').then( m => m.ResetPasswordPage)
   },
   {
+    path: 'cart',
+    loadComponent: () => import('./pages/cart/cart.page').then( m => m.CartPage)
+  },
+  {
     path: '**',
     redirectTo: 'splash'
   },

@@ -83,7 +83,7 @@ export class CartService {
 
     async getTotalProducts(): Promise<number> {
         await this.loadCart();
-        const total = this.cart.reduce((sum, item) => sum + item.quantity * item.product.price, 0);
+        const total = this.cart.reduce((sum, item) => sum + item.quantity, 0);
         return new Promise((resolve) => resolve(total));
     }
 

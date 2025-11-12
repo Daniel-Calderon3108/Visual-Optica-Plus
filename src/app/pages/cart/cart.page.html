@@ -1,0 +1,42 @@
+<ion-content>
+  <body class="screen">
+    <app-header></app-header>
+
+    <section class="container">
+      <h1>Carrito de Compras</h1>
+      <section class="cart-products">
+        @if (cartItems.length === 0) {
+        <p>Aún no has agregado productos al carrito.</p>
+        } @else {
+        <article class="items">
+          <div *ngFor="let item of cartItems" class="item">
+            <div class="item-up">
+              <div class="item-left">
+                <figure>
+                  <ion-img [src]="item.product.image"
+                    alt="{{ item.product.name }}"></ion-img>
+                </figure>
+                <p>{{ item.product.name }}</p>
+              </div>
+              <div class="item-right">
+                <button class="btn" [disabled]="item.quantity <= 1" (click)="updateQuantity(item, '-')">-</button>
+                <span>{{ item.quantity }}</span>
+                <button class="btn" (click)="updateQuantity(item, '+')">+</button>
+              </div>
+            </div>
+            <div class="item-down">
+              <p class="price">{{ item.product.price |
+                currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+              <p class="remove" (click)="removeItem(item.product.id)">Eliminar</p>
+            </div>
+          </div>
+        </article>
+        <article class="summary">
+          <p><span>Total:</span><span>{{ total | currency:'COP':'symbol-narrow':'1.0-0' }}</span></p>
+          <button class="btn" (click)="buy()">Realizar Compra</button>
+        </article>
+        }
+      </section>
+    </section>
+  </body>
+</ion-content>
