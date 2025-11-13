@@ -19,7 +19,7 @@
               <div class="item-right">
                 <button class="btn" [disabled]="item.quantity <= 1" (click)="updateQuantity(item, '-')">-</button>
                 <span>{{ item.quantity }}</span>
-                <button class="btn" (click)="updateQuantity(item, '+')">+</button>
+                <button class="btn" [disabled]="item.quantity >= item.product.stock - 4" (click)="updateQuantity(item, '+')">+</button>
               </div>
             </div>
             <div class="item-down">
