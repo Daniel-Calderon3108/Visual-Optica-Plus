@@ -1,7 +1,8 @@
 import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { MenuController } from "@ionic/angular";
-import { MenuService } from "./menu.service";
+import { MenuService } from "../menu.service";
+
 
 export type UserRole = 'admin' | 'user';
 
