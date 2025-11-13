@@ -53,10 +53,13 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
     // Verificar inmediatamente
     this.checkAdminStatus();
     
-    // Escuchar cambios de ruta para actualizar el estado de admin
+    // Escuchar cambios de ruta para actualizar el estado de admin y cerrar el menú
     this.routerSubscription = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
+        // Cerrar el menú automáticamente cuando cambia de página
+        this.closeMenu();
+        
         setTimeout(() => {
           this.checkAdminStatus();
         }, 200);
@@ -158,13 +161,30 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async navegarA(ruta: string): Promise<void> {
-    await this.menuController.close('main-menu');
+    await this.closeMenu();
     this.router.navigate([ruta]);
   }
 
   async cerrarSesion(): Promise<void> {
-    await this.menuController.close('main-menu');
+    await this.closeMenu();
     this.authService.logout();
+  }
+
+  private async closeMenu(): Promise<void> {
+    try {
+      // Intentar cerrar mediante el servicio primero
+      if (this.menuService.isMenuReady()) {
+        const menu = this.menuService.getMenu();
+        if (menu) {
+          await menu.close();
+          return;
+        }
+      }
+      // Fallback al MenuController
+      await this.menuController.close('main-menu');
+    } catch (error) {
+      // Silently handle errors
+    }
   }
 
 }

@@ -1,5 +1,7 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
+import { MenuController } from "@ionic/angular";
+import { MenuService } from "./menu.service";
 
 export type UserRole = 'admin' | 'user';
 
@@ -18,6 +20,9 @@ export interface User {
   providedIn: "root",
 })
 export class AuthService {
+    private menuController = inject(MenuController);
+    private menuService = inject(MenuService);
+    
     constructor(private router: Router) { }
 
     isAuthenticated(): boolean {
@@ -49,9 +54,29 @@ export class AuthService {
         }
     }
 
-    logout(): void {
+    async logout(): Promise<void> {
+        // Cerrar el menú antes de cerrar sesión
+        await this.closeMenu();
+        
         localStorage.removeItem('user');
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
+    }
+
+    private async closeMenu(): Promise<void> {
+        try {
+            // Intentar cerrar mediante el servicio primero
+            if (this.menuService.isMenuReady()) {
+                const menu = this.menuService.getMenu();
+                if (menu) {
+                    await menu.close();
+                    return;
+                }
+            }
+            // Fallback al MenuController
+            await this.menuController.close('main-menu');
+        } catch (error) {
+            // Silently handle errors
+        }
     }
 }
