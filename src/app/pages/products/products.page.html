@@ -1,13 +1,48 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>products</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [scrollY]="true">
+  <div class="screen">
+    <section class="container">
+      <div class="header-section">
+        <h1>
+          <ion-icon name="heart" class="title-icon"></ion-icon>
+          Mis Favoritos
+        </h1>
+        <p class="subtitle">Productos que has marcado como favoritos</p>
+      </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">products</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      @if (favoriteProducts.length > 0) {
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="6" size-lg="4" *ngFor="let producto of favoriteProducts">
+              <ion-card class="prod-card">
+                <ion-card-header class="prod-head">
+                  <ion-card-title class="prod-title">{{ producto.name }}</ion-card-title>
+                </ion-card-header>
+
+                <div class="prod-img-wrap">
+                  <ion-img [src]="producto.image" alt="{{ producto.name }}"></ion-img>
+                </div>
+
+                <ion-card-content class="prod-body">
+                  <div class="prod-price">{{ producto.price | currency:'USD':'symbol':'1.0-0' }}</div>
+                  <ion-button expand="block" size="small" shape="round" (click)="verDetalle(producto)">
+                    Más información
+                  </ion-button>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      } @else {
+        <div class="empty-state">
+          <ion-icon name="heart-outline" class="empty-icon"></ion-icon>
+          <h2>No tienes favoritos aún</h2>
+          <p>Explora nuestros productos y marca tus favoritos con el ícono de corazón</p>
+          <ion-button expand="block" shape="round" (click)="irATienda()" class="explore-button">
+            <ion-icon name="storefront-outline" slot="start"></ion-icon>
+            Explorar Productos
+          </ion-button>
+        </div>
+      }
+    </section>
+  </div>
 </ion-content>

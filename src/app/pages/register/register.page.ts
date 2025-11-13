@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { FunctionService } from 'src/app/shared/services/function/function.service';
+import { RolesService } from 'src/app/shared/services/roles.service';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,10 @@ export class RegisterPage implements OnInit {
   });
 
 
-  constructor(private functionService: FunctionService) { }
+  constructor(
+    private functionService: FunctionService,
+    private rolesService: RolesService
+  ) { }
 
   ngOnInit() {
   }
@@ -44,15 +48,19 @@ export class RegisterPage implements OnInit {
 
     // Crea un objeto con los datos del usuario
     const userData = {
-      name: this.form.value.name,
-      lastName: this.form.value.lastName,
-      email: this.form.value.email,
-      phone: this.form.value.phone,
-      user: this.form.value.user,
-      password: btoa(this.form.value.password || '') // Encripta la contraseña usando Base64
+      name: this.form.value.name || '',
+      lastName: this.form.value.lastName || '',
+      email: this.form.value.email || '',
+      phone: this.form.value.phone || '',
+      user: this.form.value.user || '',
+      password: btoa(this.form.value.password || ''), // Encripta la contraseña usando Base64
+      role: 'user' as const // Asignar rol de usuario por defecto
     };
 
-    // Guarda los datos del usuario en el localStorage
+    // Guardar usuario usando el servicio de roles
+    this.rolesService.saveUser(userData);
+
+    // Guarda también en localStorage para compatibilidad
     localStorage.setItem('user', JSON.stringify(userData));
 
     this.functionService.navigateTo('/login'); // Navega a la página de login después del registro exitoso

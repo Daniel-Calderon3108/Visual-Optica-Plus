@@ -1,9 +1,6 @@
-<ion-content>
-
-  <body class="screen">
-    <app-header></app-header>
+<ion-content [scrollY]="true">
+  <div class="screen">
     <section class="container-home">
-      <h1>Muy buenos días, {{ nameUser }}</h1>
       <h2>Productos destacados de la semana</h2>
       <ion-grid>
         <ion-row>
@@ -61,5 +58,5 @@
 
  
     </section>
-  </body>
+  </div>
 </ion-content>

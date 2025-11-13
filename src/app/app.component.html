@@ -1,9 +1,11 @@
 <ion-app>
-  <!-- Ion Menu for the whole app -->
+  <!-- Ion Menu for the whole app - Siempre en el DOM para que Ionic pueda encontrarlo -->
   <app-menu></app-menu>
 
-  <div id="main-content">
-    <app-header></app-header>
+  <div id="main-content" [class.with-header]="showHeaderAndMenu">
+    @if (showHeaderAndMenu) {
+      <app-header></app-header>
+    }
     <ion-router-outlet></ion-router-outlet>
   </div>
 </ion-app>

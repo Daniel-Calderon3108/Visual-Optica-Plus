@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonImg } from '@ionic/angular/standalone';
-import { HeaderComponent } from "src/app/shared/components/header/header/header.component";
 import { Cart, CartService } from 'src/app/services/cart.service';
 import { FunctionService } from 'src/app/shared/services/function/function.service';
 
@@ -11,7 +10,7 @@ import { FunctionService } from 'src/app/shared/services/function/function.servi
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
   standalone: true,
-  imports: [IonImg, IonContent, CommonModule, FormsModule, HeaderComponent]
+  imports: [IonImg, IonContent, CommonModule, FormsModule]
 })
 export class CartPage implements OnInit {
 

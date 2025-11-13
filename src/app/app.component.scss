@@ -1,8 +1,14 @@
 #main-content {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  padding-top: 66px; /* Height of header - accounts for fixed header */
+  height: 100vh;
+  z-index: 1; /* Asegurar que el contenido esté por encima cuando el menú está cerrado */
+  display: flex;
+  flex-direction: column;
+  
+  &.with-header {
+    padding-top: 66px; /* Height of header - accounts for fixed header */
+  }
 }
 
 app-header {
@@ -16,5 +22,9 @@ app-header {
 
 ion-router-outlet {
   display: block;
-  min-height: calc(100vh - 66px);
+  width: 100%;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  min-height: 0;
 }

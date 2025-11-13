@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './shared/guards/auth.guard';
+import { adminGuard } from './shared/guards/admin.guard';
+import { guestGuard } from './shared/guards/guest.guard';
 
 export const routes: Routes = [
   {
@@ -12,28 +15,33 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
+    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage),
+    canActivate: [guestGuard]
   },
   {
     path: 'register',
-    loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
+    loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage),
+    canActivate: [guestGuard]
   },
   {
     path: 'welcome',
-    loadComponent: () => import('./pages/welcome/welcome.page').then( m => m.WelcomePage)
+    loadComponent: () => import('./pages/welcome/welcome.page').then( m => m.WelcomePage),
+    canActivate: [authGuard]
   },
   {
     path: 'profile',
-    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage),
+    canActivate: [authGuard]
   },
-  
   {
     path: 'products',
-    loadComponent: () => import('./pages/products/products.page').then( m => m.ProductsPage)
+    loadComponent: () => import('./pages/products/products.page').then( m => m.ProductsPage),
+    canActivate: [authGuard]
   },
   {
     path: 'information/:slug',
-    loadComponent: () => import('./pages/information/information/information.page').then( m => m.InformationPage)
+    loadComponent: () => import('./pages/information/information/information.page').then( m => m.InformationPage),
+    canActivate: [authGuard]
   },
   {
     path: 'forget-password',
@@ -45,7 +53,18 @@ export const routes: Routes = [
   },
   {
     path: 'cart',
-    loadComponent: () => import('./pages/cart/cart.page').then( m => m.CartPage)
+    loadComponent: () => import('./pages/cart/cart.page').then( m => m.CartPage),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'stores',
+    loadComponent: () => import('./pages/stores/stores.page').then( m => m.StoresPage),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'user-management',
+    loadComponent: () => import('./pages/user-management/user-management.page').then( m => m.UserManagementPage),
+    canActivate: [adminGuard]
   },
   {
     path: '**',

@@ -1,7 +1,5 @@
-<ion-content *ngIf="product as p">
-  <body class="screen">
-    <app-header></app-header>
-
+<ion-content *ngIf="product as p" [scrollY]="true">
+  <div class="screen">
     <section class="container">
       <section class="container-product">
         <article class="carrousel-article">
@@ -94,5 +92,5 @@
         </section>
       </article>
     </section>
-  </body>
+  </div>
 </ion-content>

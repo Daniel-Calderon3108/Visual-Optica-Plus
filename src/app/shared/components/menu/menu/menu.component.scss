@@ -4,7 +4,17 @@ ion-menu {
   --background: var(--white);
   --width: 280px;
   --max-width: 85vw;
-  z-index: 10000;
+  
+  // El menú solo debe aparecer cuando está abierto (overlay)
+  // Cuando está cerrado, no debe interferir con el contenido
+  &::part(backdrop) {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  
+  // Asegurar que el menú no interfiera cuando está cerrado
+  &[aria-hidden="true"] {
+    pointer-events: none;
+  }
 }
 
 /* --- Encabezado y Logo --- */

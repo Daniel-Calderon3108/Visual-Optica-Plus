@@ -5,7 +5,6 @@ import {
   IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader,
   IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonImg
 } from '@ionic/angular/standalone';
-import { HeaderComponent } from 'src/app/shared/components/header/header/header.component';
 import { FunctionService } from 'src/app/shared/services/function/function.service';
 import { ProductsService, Product } from 'src/app/services/products.service';
 
@@ -15,7 +14,7 @@ import { ProductsService, Product } from 'src/app/services/products.service';
   styleUrls: ['./welcome.page.scss'],
   standalone: true,
   imports: [
-    IonContent, CommonModule, FormsModule, HeaderComponent,
+    IonContent, CommonModule, FormsModule,
     IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, 
     IonCardContent, IonButton, IonImg,
   ],
@@ -23,23 +22,16 @@ import { ProductsService, Product } from 'src/app/services/products.service';
 export class WelcomePage implements OnInit {
   productos: Product[] = [];
 
-  nameUser: string = this.functionService.getCompleteName();
-
   constructor(
     private functionService: FunctionService,
     private productsService: ProductsService
   ) {}
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.productos = await this.productsService.getProducts();
   }
 
-  agregarAlCarrito(producto: Product) {
-    console.log('Producto agregado:', producto);
-  }
-
-  verDetalle(producto: Product) {
-    // navega a /information/<slug>
+  verDetalle(producto: Product): void {
     this.functionService.navigateTo('information', producto.slug);
   }
 }

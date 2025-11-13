@@ -5,7 +5,6 @@ import {
   IonContent, IonImg, IonButton, IonIcon
 } from '@ionic/angular/standalone';
 import { ProductsService, Product } from 'src/app/services/products.service';
-import { HeaderComponent } from 'src/app/shared/components/header/header/header.component';
 import { addIcons } from 'ionicons';
 import { heart, star } from 'ionicons/icons';
 import { CartService } from 'src/app/services/cart.service';
@@ -17,7 +16,7 @@ import { FunctionService } from 'src/app/shared/services/function/function.servi
   templateUrl: './information.page.html',
   styleUrls: ['./information.page.scss'],
   imports: [IonIcon,
-    CommonModule, HeaderComponent,
+    CommonModule,
     IonContent, IonImg, IonButton
   ],
 })
@@ -28,52 +27,119 @@ export class InformationPage implements OnInit {
 
   product: Product | null = null;
   isInTheCart: boolean = false;
+  isFavorite: boolean = false;
 
-  constructor(private functionService: FunctionService, private cartService: CartService) {
-      addIcons({heart,star}); }
-
-  ngOnInit() {
-    const slug = this.route.snapshot.paramMap.get('slug') ?? '';
-    this.getProduct(slug);
-
+  constructor(
+    private functionService: FunctionService, 
+    private cartService: CartService
+  ) {
     addIcons({ heart, star });
   }
 
-  setStar(index: number) {
+  ngOnInit(): void {
+    const slug = this.route.snapshot.paramMap.get('slug') ?? '';
+    this.getProduct(slug);
+  }
+
+  setStar(index: number): void {
     for (let i = 0; i < 5; i++) {
       const starElement = document.getElementById(`start-${i}`);
       if (starElement) {
-        if (i <= index) {
-          starElement.classList.remove('empty');
-        } else {
-          starElement.classList.add('empty');
-        }
+        starElement.classList.toggle('empty', i > index);
       }
     }
   }
 
-  toggleFavorite() {
+  toggleFavorite(): void {
+    if (!this.product) return;
+    
+    this.isFavorite = !this.isFavorite;
+    this.updateHeartIcon();
+    this.saveFavoriteState();
+  }
+
+  private updateHeartIcon(): void {
     const heartElement = document.getElementById('heart');
     if (heartElement) {
-      heartElement.classList.toggle('favorite-active');
+      heartElement.classList.toggle('favorite-active', this.isFavorite);
     }
   }
 
-  async addToCart(p: Product) {
-    this.cartService.addToCart(p);
-    this.isInTheCart = true;
-    this.functionService.changeCountCart(await this.cartService.getTotalProducts());
+  private saveFavoriteState(): void {
+    if (!this.product) return;
+
+    try {
+      const favoriteIds = this.getFavoriteIds();
+      
+      if (this.isFavorite) {
+        if (!favoriteIds.includes(this.product.id)) {
+          favoriteIds.push(this.product.id);
+        }
+      } else {
+        const index = favoriteIds.indexOf(this.product.id);
+        if (index > -1) {
+          favoriteIds.splice(index, 1);
+        }
+      }
+      
+      localStorage.setItem('favorites', JSON.stringify(favoriteIds));
+    } catch (error) {
+      // Silently handle errors
+    }
   }
 
-  private getProduct(slug: string) {
-    this.products.getProductBySlug(slug).then(product => {
-      this.product = product ?? null;
-      if (!this.product) this.router.navigateByUrl('/products');
+  private getFavoriteIds(): string[] {
+    try {
+      const favoritesStr = localStorage.getItem('favorites');
+      return favoritesStr ? JSON.parse(favoritesStr) : [];
+    } catch {
+      return [];
+    }
+  }
 
-      const cart = this.cartService.getItems().then(items => {
-        this.isInTheCart = items.some(item => item.product.id === this.product?.id);
-      });
-    });
+  async addToCart(product: Product): Promise<void> {
+    await this.cartService.addToCart(product);
+    this.isInTheCart = true;
+    const totalProducts = await this.cartService.getTotalProducts();
+    this.functionService.changeCountCart(totalProducts);
+  }
+
+  private async getProduct(slug: string): Promise<void> {
+    try {
+      const product = await this.products.getProductBySlug(slug);
+      this.product = product ?? null;
+      
+      if (!this.product) {
+        this.router.navigateByUrl('/products');
+        return;
+      }
+
+      await this.checkCartStatus();
+      this.checkIfFavorite();
+    } catch (error) {
+      this.router.navigateByUrl('/products');
+    }
+  }
+
+  private async checkCartStatus(): Promise<void> {
+    try {
+      const items = await this.cartService.getItems();
+      this.isInTheCart = items.some(item => item.product.id === this.product?.id);
+    } catch (error) {
+      this.isInTheCart = false;
+    }
+  }
+
+  private checkIfFavorite(): void {
+    if (!this.product) return;
+    
+    try {
+      const favoriteIds = this.getFavoriteIds();
+      this.isFavorite = favoriteIds.includes(this.product.id);
+      this.updateHeartIcon();
+    } catch (error) {
+      this.isFavorite = false;
+    }
   }
 }
 

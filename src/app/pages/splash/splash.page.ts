@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 import { FunctionService } from 'src/app/shared/services/function/function.service';
+import { AuthService } from 'src/app/shared/services/auth/auth';
 
 @Component({
   selector: 'app-splash',
@@ -12,19 +14,33 @@ import { FunctionService } from 'src/app/shared/services/function/function.servi
 })
 export class SplashPage implements OnInit, OnDestroy {
 
-  timer: any; // Timer para la pantalla de carga
+  private timer?: ReturnType<typeof setTimeout>;
 
-  constructor(private functionService: FunctionService) { }
+  constructor(
+    private functionService: FunctionService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
-  ngOnInit() {
-    this.navigateToLogin();
+  private readonly SPLASH_DELAY = 3000;
+
+  ngOnInit(): void {
+    this.navigateAfterSplash();
   }
 
-  ngOnDestroy() {
-    if (this.timer) clearTimeout(this.timer);
+  ngOnDestroy(): void {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   }
 
-  navigateToLogin() {
-    this.timer = setTimeout(() => this.functionService.navigateTo('/login'), 3000); // Espera 3 segundos antes de navegar
+  private navigateAfterSplash(): void {
+    this.timer = setTimeout(() => {
+      if (this.authService.isAuthenticated()) {
+        this.router.navigate(['/welcome'], { replaceUrl: true });
+      } else {
+        this.router.navigate(['/login'], { replaceUrl: true });
+      }
+    }, this.SPLASH_DELAY);
   }
 }

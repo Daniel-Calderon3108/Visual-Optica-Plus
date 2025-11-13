@@ -1,6 +1,5 @@
-<ion-content [fullscreen]="true">
-  <body class="screen">
-    <app-header></app-header>
+<ion-content [fullscreen]="true" [scrollY]="true">
+  <div class="screen">
     <ion-header collapse="condense">
       <ion-toolbar>
         <ion-title size="large">Profile</ion-title>
@@ -17,20 +16,24 @@
             <div class="avatar-circle">{{ getInitials }}</div>
             <div class="info-text">
               <h2 class="name-text">{{ getCompleteName }}</h2>
-              <p class="user-text">@{{ userActual.user }}</p>
+              @if (userActual) {
+                <p class="user-text">@{{ userActual.user }}</p>
+              }
             </div>
           </div>
 
-          <div class="personal-details">
-            <div class="detail-item">
-              <ion-icon name="mail-outline" class="detail-icon"></ion-icon>
-              <p>Correo Electrónico: <span>{{ userActual.email }}</span></p>
+          @if (userActual) {
+            <div class="personal-details">
+              <div class="detail-item">
+                <ion-icon name="mail-outline" class="detail-icon"></ion-icon>
+                <p>Correo Electrónico: <span>{{ userActual.email }}</span></p>
+              </div>
+              <div class="detail-item">
+                <ion-icon name="call-outline" class="detail-icon"></ion-icon>
+                <p>Teléfono: <span>+57 {{ userActual.phone }}</span></p>
+              </div>
             </div>
-            <div class="detail-item">
-              <ion-icon name="call-outline" class="detail-icon"></ion-icon>
-              <p>Teléfono: <span>+57 {{ userActual.phone }}</span></p>
-            </div>
-          </div>
+          }
 
         </ion-card-content>
       </ion-card>
@@ -83,12 +86,12 @@
       </div>
 
     </div>
-  </body>
+  </div>
 
   <!-- Modal para editar perfil -->
   <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="true"
-    (ionModalDidDismiss)="onModalDidDismiss($event)"
-    (ionModalDidPresent)="onModalDidPresent($event)">
+    (ionModalDidDismiss)="onModalDidDismiss()"
+    (ionModalDidPresent)="onModalDidPresent()">
     <ng-template>
       <ion-header>
         <ion-toolbar>

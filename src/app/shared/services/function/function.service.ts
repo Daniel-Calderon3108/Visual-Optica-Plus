@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../auth/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FunctionService {
-
-  userActual: any = null;
-  token: string = '';
-
-  countCart: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  currentCountCart = this.countCart.asObservable();
+  private readonly TOKEN_LENGTH = 16;
+  private readonly TOKEN_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+  private countCartSubject = new BehaviorSubject<number>(0);
+  public readonly currentCountCart: Observable<number> = this.countCartSubject.asObservable();
 
   constructor(private router: Router) { }
 
-  // Navegar a una URL específica
   navigateTo(url: string, data: string = ""): void {
     if (data) {
       this.router.navigate([url, data]);  
@@ -24,51 +23,52 @@ export class FunctionService {
     this.router.navigateByUrl(url);
   }
 
-  // Obtener el usuario actual desde el almacenamiento local
-  getUserActual() {
+  getUserActual(): User | null {
     try {
-      this.userActual = localStorage.getItem('user');
-
-      if (!this.userActual) return null;
-      this.userActual = JSON.parse(this.userActual);
-      return this.userActual;
+      const userStr = localStorage.getItem('user');
+      if (!userStr) return null;
+      return JSON.parse(userStr) as User;
     } catch (error) {
       return null;
     }
   }
 
-  // Obtener el nombre completo del usuario
   getCompleteName(): string {
-    this.getUserActual();
-    if (!this.userActual) return 'Invitado';
-    return `${this.userActual.name} ${this.userActual.lastName}`;
+    const user = this.getUserActual();
+    if (!user) return 'Invitado';
+    return `${user.name} ${user.lastName}`;
   }
 
-  // Obtener las iniciales del usuario
   getUserInitials(): string {
-    if (!this.userActual) return 'I';
-    return `${this.userActual.name.charAt(0)}${this.userActual.lastName.charAt(0)}`;
+    const user = this.getUserActual();
+    if (!user) return 'I';
+    return `${user.name.charAt(0)}${user.lastName.charAt(0)}`;
   }
 
-  // Generar un token aleatorio
-  async generateToken() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  async generateToken(): Promise<string> {
     let token = '';
-    for (let i = 0; i < 16; i++) {
-      token += characters.charAt(Math.floor(Math.random() * characters.length));
+    for (let i = 0; i < this.TOKEN_LENGTH; i++) {
+      token += this.TOKEN_CHARACTERS.charAt(
+        Math.floor(Math.random() * this.TOKEN_CHARACTERS.length)
+      );
     }
     await this.saveToken(token);
     return token;
   }
 
-  // Guardar el token en el almacenamiento local
-  async saveToken(token: string) {
+  private async saveToken(token: string): Promise<void> {
     localStorage.setItem('token', token);
-    this.token = token;
   }
 
-  // Cambiar el conteo del carrito
-  changeCountCart(count: number) {
-    this.countCart.next(count);
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  clearToken(): void {
+    localStorage.removeItem('token');
+  }
+
+  changeCountCart(count: number): void {
+    this.countCartSubject.next(count);
   }
 }
